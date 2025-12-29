@@ -1,0 +1,30 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: card-service
+  datasource:
+    url: jdbc:h2:file:D:/Users/T0254432/carddb;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: h9KQeY7+u3ZKJ7q5Q+7+5fQyR2hQZ2z3r0C5FZkH4aE=
+
+gateway:
+  security:
+    internal-secret: GATEWAY_SECRET_123

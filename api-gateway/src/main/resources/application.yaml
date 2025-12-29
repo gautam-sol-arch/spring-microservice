@@ -1,0 +1,48 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+          routes:
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/user/**,/api/auth/**
+            - id: account-service
+              uri: lb://ACCOUNT-SERVICE
+              predicates:
+                - Path=/api/account/**
+            - id: card-service
+              uri: lb://CARD-SERVICE
+              predicates:
+                - Path=/api/card/**
+            - id: load-service
+              uri: lb://LOAN-SERVICE
+              predicates:
+                - Path=/api/loan/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: h9KQeY7+u3ZKJ7q5Q+7+5fQyR2hQZ2z3r0C5FZkH4aE=
+
+gateway:
+  security:
+    internal-secret: GATEWAY_SECRET_123
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: trace
+    org.springframework.web.reactive: trace
+
