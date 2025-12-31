@@ -1,8 +1,8 @@
 package com.gautam.users.utils;
 
+import com.gautam.users.config.JwtProperties;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -14,8 +14,8 @@ public class JwtUtil {
 
     private final SecretKey key;
 
-    public JwtUtil(@Value("${jwt.secret}") String secret) {
-        this.key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+    public JwtUtil(JwtProperties jwtProperties) {
+        this.key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(jwtProperties.getSecret()));
     }
 
     public String generateToken(String username) {
