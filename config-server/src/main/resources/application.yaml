@@ -1,14 +1,6 @@
 spring:
   application:
     name: config-server
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/gautam-sol-arch/config-server.git
-          username: gautam-sol-arch
-          password: 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
-          default-lebel: main
 server:
   port: 8888
 management:
