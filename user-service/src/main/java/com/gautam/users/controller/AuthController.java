@@ -36,5 +36,13 @@ public class AuthController {
                         AuthConstant.STATUS_200, AuthConstant.MESSAGE_LOGIN_SUCCESS,
                         Map.of("token", token)));
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<ResponseDto> deleteUser(@RequestParam String username) {
+        userService.deleteUser(username);
+        return ResponseEntity.ok(
+                new ResponseDto(
+                        AuthConstant.STATUS_200, "deleted"));
+    }
 }
 

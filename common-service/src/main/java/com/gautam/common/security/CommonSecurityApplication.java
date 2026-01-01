@@ -1,12 +1,11 @@
-package com.gautam.common;
+package com.gautam.common.security;
 
-import com.gautam.common.security.SecurityProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
-@EnableConfigurationProperties(SecurityProperties.class)
+@ConfigurationPropertiesScan
 public class CommonSecurityApplication {
 
     public static void main(String[] args) {
