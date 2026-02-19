@@ -1,8 +1,13 @@
 server:
   port: 8080
+
 spring:
   application:
     name: api-gateway
+  
+  # config:
+  #   import: configserver:http://config-server:8888
+    
   cloud:
     gateway:
       server:
@@ -24,35 +29,40 @@ spring:
               uri: lb://CARD-SERVICE
               predicates:
                 - Path=/api/card/**
-            - id: load-service
+            - id: loan-service
               uri: lb://LOAN-SERVICE
               predicates:
                 - Path=/api/loan/**
+  
+  # Disable security for actuator endpoints
+  security:
+    user:
+      name: actuator
+      password: actuator
+      roles: ACTUATOR
+
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-server:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
 
-# Security Configuration
-app:
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
   security:
-    jwt:
-      secret: ${JWT_SECRET:U2VjcmV0S2V5Rm9ySldUU2lnbmluZ0tleUZvckpXVFNpZ25pbmdLZXlGb3JKV1RTaWduaW5nS2V5} # Should be the same across all services
-      expiration-ms: 86400000 # 24 hours
-    cors:
-      allowed-origins: "http://localhost:3000,http://localhost:8080"
-      allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
-      allowed-headers: "*"
-      exposed-headers: "Authorization"
-      allow-credentials: true
-      max-age: 3600
-    internal:
-      header: X-Internal-Auth
-      secret: ${GATEWAY_SECRET}
+    enabled: false
 
 logging:
   level:
     root: INFO
-    org.springframework.cloud.gateway: trace
-    org.springframework.web.reactive: trace
-
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.reactive: DEBUG

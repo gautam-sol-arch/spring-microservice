@@ -32,6 +32,12 @@ public class GatewayAuthFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         String header = request.getHeader("X-Internal-Auth");
 
+        // Skip authentication for actuator endpoints
+        if (uri.startsWith("/actuator")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (uri.startsWith("/api/auth")) {
             if (!properties.getInternalSecret().equals(header)) {
                 log.warn("Unauthorized access attempt to {} from {}", uri, request.getRemoteAddr());

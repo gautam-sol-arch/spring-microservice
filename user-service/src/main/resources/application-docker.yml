@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: user-service
+    
+  config:
+    import: configserver:http://config-server:8888
+    
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: admin
+    password: admin
+    
+  cloud:
+    bus:
+      enabled: true
+  
+  # Disable security for actuator endpoints
+  security:
+    user:
+      name: actuator
+      password: actuator
+      roles: ACTUATOR
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  security:
+    enabled: false
+      
+server:
+  port: 8082
+  
+logging:
+  level:
+    com.gautam.users: DEBUG
+    org.springframework.cloud.config: DEBUG
+    org.springframework.cloud.bus: DEBUG

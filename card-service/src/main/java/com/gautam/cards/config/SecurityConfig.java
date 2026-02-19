@@ -18,7 +18,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                                               .requestMatchers("/api/auth/**").permitAll()
+                                               .requestMatchers("/api/auth/**", "/actuator/**").permitAll()
                                                .anyRequest().hasRole("GATEWAY")
                                       )
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)

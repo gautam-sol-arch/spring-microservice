@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class RouteConfig {
 
-    @Value("${gateway.security.internal-secret}")
+    @Value("${app.security.internal.secret}")
     private String internalSecret;
 
     @Bean
@@ -36,7 +36,6 @@ public class RouteConfig {
                               "card-service",
                               r -> r.path("/api/card/**").filters(f -> f.addRequestHeader(
                                       "X" +
-
                                               "-Internal-Auth", internalSecret)).uri(
                                       "http://localhost:8084"))
                       // Load Service
@@ -44,7 +43,6 @@ public class RouteConfig {
                               "loan-service",
                               r -> r.path("/api/loan/**").filters(f -> f.addRequestHeader(
                                       "X" +
-
                                               "-Internal-Auth", internalSecret)).uri(
                                       "http://localhost:8085")).build();
     }
